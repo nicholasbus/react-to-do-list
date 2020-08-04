@@ -8,7 +8,9 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-import { listAllItems } from './API';
+import { NewItemForm } from './components/NewItemForm.js';
+
+import { listAllItems, deleteItem } from './API';
 
 function App() {
   const [toDoItems, setToDoItems] = useState([]);
@@ -17,7 +19,7 @@ function App() {
     on: null
   });
 
-
+  
 
   useEffect(() => {
     (async () => {
@@ -31,7 +33,7 @@ function App() {
     <Container>
       <ListGroup>
         {
-          toDoItems.map((item) => (
+          toDoItems.slice(0).reverse().map((item) => (
             <div key={item._id}>
               <ListGroup.Item>
                 <Row>
@@ -53,7 +55,20 @@ function App() {
                     <Button variant="warning">Edit</Button>
                   </Col>
                   <Col>
-                    <Button variant="danger">Delete</Button>
+                    <Button
+                      variant="danger"
+                      id={item._id}
+                      onClick={(e) => {
+                        console.log(e.target.id)
+                        deleteItem({
+                          id: e.target.id
+                        })
+                          .then(res => console.log("status 🍔 " + res.status + ". items deleted 🧀 " + res.deletedCount))
+                        window.location.reload(false);
+                      }}
+                    >
+                      Delete
+                    </Button>
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -62,6 +77,10 @@ function App() {
                 showInfo.on === item._id ? (
                   <Modal
                     show={showInfo.show}
+                    onHide={() => setShowInfo({
+                      show: false,
+                      on: null
+                    })}
                   >
                     <Modal.Header
                       closeButton
@@ -116,6 +135,10 @@ function App() {
         showInfo.on === "newItem" ? (
           <Modal
             show={showInfo.show}
+            onHide={() => setShowInfo({
+              show: false,
+              on: null
+            })}
           >
             <Modal.Header
               closeButton
@@ -128,20 +151,12 @@ function App() {
             </Modal.Header>
 
             <Modal.Body>
-              Form
+              <NewItemForm />
             </Modal.Body>
 
             <Modal.Footer>
              
-              <Button
-                variant="primary"
-                onClick={() => setShowInfo({
-                  show: false,
-                  on: null
-                })}
-              >
-                Add
-              </Button>
+              
             </Modal.Footer>
 
           </Modal>
