@@ -29,9 +29,16 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+// edit an entry
+router.put('/edit/:id', (req, res, next) => {
+    console.log(req.body)
+    Item.findOneAndUpdate({ _id: req.params.id }, req.body, {new: true})
+        .then(updated => res.json(req.body))
+        .catch(err => next(err))
+});
+
 //delete an entry
 router.delete('/:id', (req, res, next) => {
-    console.log(req.body)
     Item.deleteOne({ _id: req.params.id })
         .then(deleted => res.json({
             status: deleted.ok,

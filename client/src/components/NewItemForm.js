@@ -2,14 +2,14 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import { postNewItem } from '../API';
+import { postNewItem, editItem } from '../API';
 
 export class NewItemForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-          title: '',
-          description: '',
+          title: this.props.title,
+          description: this.props.description,
           status: '',
       };
   
@@ -21,6 +21,7 @@ export class NewItemForm extends React.Component {
   
     handleChangeTitle(event) {
       this.setState({title: event.target.value});
+      
     }
 
     handleChangeDescription(event) {
@@ -34,7 +35,17 @@ export class NewItemForm extends React.Component {
     handleSubmit(event) {
       console.log(this.state);
 
-      postNewItem(this.state);
+      event.preventDefault();
+
+      if(this.props.method === "post") {
+        console.log("inside post block")
+        postNewItem(this.state)
+          
+      } else if(this.props.method === "edit") {
+        console.log("inside edit block")
+        editItem(this.props.id, this.state)
+          .then(edited => console.log(edited))
+      }
 
       
     }
@@ -44,12 +55,12 @@ export class NewItemForm extends React.Component {
         <Form onSubmit={this.handleSubmit}>
             <Form.Group controlId="title">
                 <Form.Label>Title</Form.Label>
-                <Form.Control type="text" placeholder="Title" onChange={this.handleChangeTitle}/>
+                <Form.Control type="text" value={this.state.title} onChange={this.handleChangeTitle} />
             </Form.Group>
 
             <Form.Group controlId="description">
                 <Form.Label>Description</Form.Label>
-                <Form.Control type="text" placeholder="Description" onChange={this.handleChangeDescription} />
+                <Form.Control type="text" value={this.state.description} onChange={this.handleChangeDescription} />
             </Form.Group>
             <Form.Group controlId="status">
                 <Form.Label>Description</Form.Label>

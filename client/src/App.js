@@ -16,7 +16,8 @@ function App() {
   const [toDoItems, setToDoItems] = useState([]);
   const [showInfo, setShowInfo] = useState({
     show: false,
-    on: null
+    on: null,
+    purpose: ''
   });
 
   
@@ -45,7 +46,8 @@ function App() {
                       onClick={(e) => {
                           setShowInfo({
                             show: true,
-                            on: e.target.id
+                            on: e.target.id,
+                            purpose: 'view'
                           });
                       }}
                     >
@@ -53,7 +55,19 @@ function App() {
                     </Button>
                   </Col>
                   <Col>
-                    <Button variant="warning">Edit</Button>
+                    <Button
+                      variant="warning"
+                      id={item._id}
+                      onClick={(e) => {
+                          setShowInfo({
+                            show: true,
+                            on: e.target.id,
+                            purpose: 'edit'
+                          });
+                      }}
+                    >
+                      Edit
+                    </Button>
                   </Col>
                   <Col>
                     <Button
@@ -73,19 +87,21 @@ function App() {
               </ListGroup.Item>
               
               {
-                showInfo.on === item._id ? (
+                showInfo.on === item._id && showInfo.purpose === 'view' ? (
                   <Modal
                     show={showInfo.show}
                     onHide={() => setShowInfo({
                       show: false,
-                      on: null
+                      on: null,
+                      purpose: ''
                     })}
                   >
                     <Modal.Header
                       closeButton
                       onHide={() => setShowInfo({
                         show: false,
-                        on: null
+                        on: null,
+                        purpose: ''
                       })}  
                     >
                       <Modal.Title>{item.title}</Modal.Title>
@@ -101,11 +117,45 @@ function App() {
                         variant="primary"
                         onClick={() => setShowInfo({
                           show: false,
-                          on: null
+                          on: null,
+                          purpose: ''
                         })}
                       >
                         Ok
                       </Button>
+                    </Modal.Footer>
+
+                  </Modal>
+                ) : null
+              }
+
+              {
+                showInfo.on === item._id && showInfo.purpose === 'edit' ? (
+                  <Modal
+                    show={showInfo.show}
+                    onHide={() => setShowInfo({
+                      show: false,
+                      on: null,
+                      purpose: ''
+                    })}
+                  >
+                    <Modal.Header
+                      closeButton
+                      onHide={() => setShowInfo({
+                        show: false,
+                        on: null,
+                        purpose: ''
+                      })}  
+                    >
+                      <Modal.Title>{item.title}</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                      <NewItemForm title={item.title} description={item.description} id={item._id} method='edit' />
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                      
                     </Modal.Footer>
 
                   </Modal>
@@ -123,7 +173,8 @@ function App() {
         onClick={() => {
           setShowInfo({
             show: true,
-            on: "newItem"
+            on: "newItem",
+            purpose: 'new'
           })
         }}
       >
@@ -131,19 +182,21 @@ function App() {
       </Button>
 
       {
-        showInfo.on === "newItem" ? (
+        showInfo.on === "newItem" && showInfo.purpose === 'new' ? (
           <Modal
             show={showInfo.show}
             onHide={() => setShowInfo({
               show: false,
-              on: null
+              on: null,
+              purpose: ''
             })}
           >
             <Modal.Header
               closeButton
               onHide={() => setShowInfo({
                 show: false,
-                on: null
+                on: null,
+                purpose: ''
               })}  
             >
               <Modal.Title>New Item</Modal.Title>

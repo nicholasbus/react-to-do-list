@@ -23,10 +23,21 @@ export async function postNewItem(data={}) {
 
 export async function deleteItem(id) {
 
-    console.log("data from the func: " + JSON.stringify(id))
-
     const response = await fetch(`${API_URL}/api/items/${id}`, {
         method: 'DELETE',
+    })
+
+    return response.json()
+}
+
+export async function editItem(id, data={}) {
+
+    const response = await fetch(`${API_URL}/api/items/edit/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(data)
     })
 
     return response.json()
