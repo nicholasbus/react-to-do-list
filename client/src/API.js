@@ -21,13 +21,12 @@ export async function postNewItem(data={}) {
     return response.json();
 } 
 
-export async function deleteItem(data={}) {
+export async function deleteItem(id) {
 
-    console.log("data from the func: " + JSON.stringify(data))
+    console.log("data from the func: " + JSON.stringify(id))
 
-    const response = await fetch(`${API_URL}/api/items`, {
+    const response = await fetch(`${API_URL}/api/items/${id}`, {
         method: 'DELETE',
-        body: JSON.stringify(data)
     })
 
     return response.json()

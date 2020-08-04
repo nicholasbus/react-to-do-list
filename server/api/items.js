@@ -30,14 +30,14 @@ router.post('/', async (req, res, next) => {
 });
 
 //delete an entry
-router.delete('/', (req, res, next) => {
-    Item.deleteOne(req.body)
+router.delete('/:id', (req, res, next) => {
+    console.log(req.body)
+    Item.deleteOne({ _id: req.params.id })
         .then(deleted => res.json({
             status: deleted.ok,
             deletedCount: deleted.deletedCount
         }))
         .catch(err => next(err))
-    
 });
 
 module.exports = router;

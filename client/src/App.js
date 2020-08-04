@@ -33,6 +33,7 @@ function App() {
     <Container>
       <ListGroup>
         {
+          //
           toDoItems.slice(0).reverse().map((item) => (
             <div key={item._id}>
               <ListGroup.Item>
@@ -60,11 +61,9 @@ function App() {
                       id={item._id}
                       onClick={(e) => {
                         console.log(e.target.id)
-                        deleteItem({
-                          id: e.target.id
-                        })
+                        deleteItem(e.target.id)
                           .then(res => console.log("status 🍔 " + res.status + ". items deleted 🧀 " + res.deletedCount))
-                        window.location.reload(false);
+                        // window.location.reload(false);
                       }}
                     >
                       Delete
