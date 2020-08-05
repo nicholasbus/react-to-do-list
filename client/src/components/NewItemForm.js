@@ -33,10 +33,6 @@ export class NewItemForm extends React.Component {
     }
   
     handleSubmit(event) {
-      console.log(this.state);
-
-      event.preventDefault();
-
       if(this.props.method === "post") {
         console.log("inside post block")
         postNewItem(this.state)
@@ -47,7 +43,6 @@ export class NewItemForm extends React.Component {
           .then(edited => console.log(edited))
       }
 
-      
     }
   
     render() {
@@ -55,12 +50,12 @@ export class NewItemForm extends React.Component {
         <Form onSubmit={this.handleSubmit}>
             <Form.Group controlId="title">
                 <Form.Label>Title</Form.Label>
-                <Form.Control type="text" value={this.state.title} onChange={this.handleChangeTitle} />
+                <Form.Control type="text" value={this.state.title || ''} onChange={this.handleChangeTitle} />
             </Form.Group>
 
             <Form.Group controlId="description">
                 <Form.Label>Description</Form.Label>
-                <Form.Control type="text" value={this.state.description} onChange={this.handleChangeDescription} />
+                <Form.Control type="text" value={this.state.description || ''} onChange={this.handleChangeDescription} />
             </Form.Group>
             <Form.Group controlId="status">
                 <Form.Label>Description</Form.Label>
