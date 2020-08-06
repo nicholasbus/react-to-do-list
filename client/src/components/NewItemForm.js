@@ -10,7 +10,7 @@ export class NewItemForm extends React.Component {
       this.state = {
           title: this.props.title,
           description: this.props.description,
-          status: '',
+          status: 'Open',
       };
   
       this.handleChangeTitle = this.handleChangeTitle.bind(this);

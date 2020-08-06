@@ -154,10 +154,7 @@ export function ItemList() {
                             <NewItemForm title={item.title} description={item.description} id={item._id} method='edit' />
                             </Modal.Body>
 
-                            <Modal.Footer>
                             
-                            </Modal.Footer>
-
                         </Modal>
                         ) : null
                     }
