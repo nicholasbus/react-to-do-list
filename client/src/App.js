@@ -24,7 +24,9 @@ function App() {
       <Row>
         <Col>
           <h1>All To-Do Items</h1>
+          {/* button componenet to make a new item in the list */}
           <NewItemButton />
+
           {/* component that calls the API and lists the items it gets back */}
           <ItemList /> 
         </Col>
